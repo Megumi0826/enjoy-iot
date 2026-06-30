@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.enjoy-iot</groupId>
+        <artifactId>iot-platform</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>server</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>
+        后端 Server 的主项目，通过引入需要 module-xxx 的依赖
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>module-system-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>module-infra-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!-- enjoy IoT 物联网相关模块。默认注释，保证编译速度 -->
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>module-eiot-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>module-ai-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>module-member-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>iot-component-mqtt</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>iot-component-emqx</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>iot-component-http</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>iot-component-udp</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>iot-component-modbus-custom</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!--需要添加tcp组件依赖，否则tcp组件模块中的Component不能被Spring管理-->
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>iot-component-tcp</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>iot-component-coap</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!-- spring boot 配置所需依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- 服务保障相关 -->
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>spring-boot-starter-protection</artifactId>
+        </dependency>
+
+        <!--        设备日志依赖 start #####################-->
+        <!--打开注释 启用es数据库, 同时注意yml配置-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.enjoy-iot</groupId>-->
+        <!--            <artifactId>iot-temporal-serviceimpl-es</artifactId>-->
+        <!--            <version>${revision}</version>-->
+        <!--        </dependency>-->
+
+        <!--打开注释 启用td数据库, 同时注意yml配置-->
+        <dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>iot-temporal-serviceimpl-td</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!--打开注释 启用关系型数据库(MySQL/PostgreSQL), 同时注意yml配置-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.enjoy-iot</groupId>-->
+        <!--            <artifactId>iot-temporal-serviceimpl-rdb</artifactId>-->
+        <!--            <version>${revision}</version>-->
+        <!--        </dependency>-->
+
+        <!--打开注释 启用timescaledb数据库-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.enjoy-iot</groupId>-->
+        <!--            <artifactId>iot-temporal-serviceimpl-timescaledb</artifactId>-->
+        <!--            <version>${revision}</version>-->
+        <!--        </dependency>-->
+
+        <!--打开注释 启用iotdb数据库-->
+<!--        <dependency>-->
+<!--            <groupId>com.enjoy-iot</groupId>-->
+<!--            <artifactId>iot-temporal-serviceimpl-iotdb</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
+        <!--打开注释 启用kw数据库, 同时注意yml配置-->
+        <!--<dependency>
+            <groupId>com.enjoy-iot</groupId>
+            <artifactId>iot-temporal-serviceimpl-kw</artifactId>
+            <version>${revision}</version>
+        </dependency>-->
+        <!--        设备日志依赖 end #####################-->
+
+
+    </dependencies>
+
+    <build>
+        <!-- 设置构建的 jar 包名 -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- 打包 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal> <!-- 将引入的 jar 打入其中 -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
